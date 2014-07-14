@@ -1,7 +1,6 @@
 package com.account.dbaccess;
 
 import com.account.selectors.Account;
-import com.sun.jersey.spi.inject.Inject;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
@@ -42,7 +41,7 @@ this.table=table;
     }
 
     @Override
-    public Double addFunds( Double Deposit) throws IOException {
+    public Double addFunds( Double deposit) throws IOException {
         Get get = new Get(Bytes.toBytes("row1"));
 
         get.addColumn(Bytes.toBytes("Account"), Bytes.toBytes("Balance"));
@@ -53,7 +52,7 @@ this.table=table;
                 Bytes.toBytes("Balance"));
 
         CurrentBalance = Double.parseDouble(Bytes.toString(val));
-        UpdatedBalance = CurrentBalance + Deposit;
+        UpdatedBalance = CurrentBalance + deposit;
         if (UpdatedBalance <= 0) {
             log.error("ERROR Message:FAILED while updating adding funds into ColumnFamily!--ACCOUNT");
             return UpdatedBalance;
@@ -66,7 +65,7 @@ this.table=table;
 
 
     @Override
-    public Double withdrawFunds(Double Deposit) throws IOException {
+    public Double withdrawFunds(Double deposit) throws IOException {
         Get get = new Get(Bytes.toBytes("row1"));
 
         get.addColumn(Bytes.toBytes("Account"), Bytes.toBytes("Balance"));
@@ -77,7 +76,7 @@ this.table=table;
                 Bytes.toBytes("Balance"));
 
         CurrentBalance = Double.parseDouble(Bytes.toString(val));
-        UpdatedBalance = CurrentBalance - Deposit;
+        UpdatedBalance = CurrentBalance - deposit;
         if (UpdatedBalance <= 0) {
             log.error("ERROR Message:FAILED while updating adding funds into ColumnFamily!--ACCOUNT");
             return UpdatedBalance;
